@@ -1,0 +1,14 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: provider-service
+dubbo:
+  scan:
+    base-packages: com.liziyuan.dubbo.demo # 指定需要注册到注册中心的服务扫描路径，也可以使用注解@EnableDubbo指定
+  protocol:
+    name: dubbo
+    port: -1 # random
+    ##host: 192.168.0.100 # 多网卡时需要指定一下取本地的哪个ip，尤其是有虚拟网卡的时候
+  registry:
+    address: zookeeper://127.0.0.1:2181

@@ -1,0 +1,8 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: comsumer-service
+dubbo:
+  registry:
+    address: zookeeper://127.0.0.1:2181 # 消费者可以不指定协议等信息

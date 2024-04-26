@@ -1,0 +1,21 @@
+.project
+*/target/
+**/.settings/
+**/.factorypath
+**/.classpath
+/.metadata/
+*.iml
+.idea
+**/bin/
+**/.apt_generated/
+**/**.log
+./logback.xml
+logs
+.DS_Store
+*/.DS_Store
+/invokerResults/
+
+# Project exclude paths
+/dubbo-demo/dubbo-api/target/
+/dubbo-demo/dubbo-consumer/target/
+/dubbo-demo/dubbo-provider/target/
