@@ -22,7 +22,7 @@ public class UserController {
      * check=false,关闭启动时检查，避免当前服务启动时所依赖的提供者不能正常提供服务导致启动失败，生产环境默认true即可，可以及早发现问题所在
      * 同时指定了getOrder方法超时时间为5000毫秒
      */
-    @DubboReference(version = "V3", check = false, methods = {@Method(name = "getOrder", timeout = 5000)})
+    @DubboReference(version = "V1", check = false, methods = {@Method(name = "getOrder", timeout = 5000)})
     OrderService orderService;
 
     @GetMapping("getOrderByUserName")
