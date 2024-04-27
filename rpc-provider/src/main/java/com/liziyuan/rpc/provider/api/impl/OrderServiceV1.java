@@ -3,6 +3,7 @@ package com.liziyuan.rpc.provider.api.impl;
 import com.liziyuan.rpc.provider.OrderService;
 import com.liziyuan.rpc.provider.entity.OrderInfo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  * @date 2024-04-26 21:38
  */
 
-public class OrderServiceV1 implements OrderService {
+public class OrderServiceV1 implements OrderService, Serializable {
     public OrderInfo getOrder(String userName) {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(100L);

@@ -10,20 +10,35 @@ import java.io.Serializable;
  */
 public class URL implements Serializable {
 
-    String hostName;
-    Integer port;
+    private String protocol;
+    private String hostname;
+    private Integer port;
+    private String interfaceName;
+    // 此字段不序列化
+    private transient Class implClass;
 
-    public URL(String hostName, Integer port) {
-        this.hostName = hostName;
+    public URL(String protocol, String hostname, Integer port, String interfaceName, Class implClass) {
+        this.protocol = protocol;
+        this.hostname = hostname;
         this.port = port;
+        this.interfaceName = interfaceName;
+        this.implClass = implClass;
     }
 
-    public String getHostName() {
-        return hostName;
+    public String getProtocol() {
+        return protocol;
     }
 
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     public Integer getPort() {
@@ -32,5 +47,21 @@ public class URL implements Serializable {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public String getInterfaceName() {
+        return interfaceName;
+    }
+
+    public void setInterfaceName(String interfaceName) {
+        this.interfaceName = interfaceName;
+    }
+
+    public Class getImplClass() {
+        return implClass;
+    }
+
+    public void setImplClass(Class implClass) {
+        this.implClass = implClass;
     }
 }

@@ -19,9 +19,15 @@ import java.util.Random;
  */
 public class LoadBalance {
 
-    public static URL random(List<URL> urlList) {
+    /*public static URL random(List<URL> urlList) {
         // greater than or equal to 0.0 and less than 1.0.
         Random random = new Random();
         return urlList.get(random.nextInt(urlList.size()));
+    }*/
+
+    public static Invoker random(List<Invoker> invokers) {
+        // greater than or equal to 0.0 and less than 1.0.
+        Random random = new Random();
+        return invokers.get(random.nextInt(invokers.size()));
     }
 }

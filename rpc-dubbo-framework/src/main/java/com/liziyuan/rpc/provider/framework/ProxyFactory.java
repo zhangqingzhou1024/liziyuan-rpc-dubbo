@@ -1,8 +1,6 @@
 package com.liziyuan.rpc.provider.framework;
 
 import com.alibaba.fastjson.JSON;
-import com.liziyuan.rpc.provider.framework.protocol.http.HttpClient;
-import com.liziyuan.rpc.provider.framework.register.RemoteMapRegister;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -26,34 +24,26 @@ public class ProxyFactory {
     private static Map<String, List<URL>> LOCAL_SP_CACHE = new ConcurrentHashMap<>();
 
 
-    public static <T> T getProxy(Class aClass) {
+    public static <T> T getProxy(Class interfaceClass) {
 
-        Object proxyInstance = Proxy.newProxyInstance(ProxyFactory.class.getClassLoader(), new Class[]{aClass}, new InvocationHandler() {
+        Object proxyInstance = Proxy.newProxyInstance(ProxyFactory.class.getClassLoader(), new Class[]{interfaceClass}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
-
-                // 封装 invocation
-                Invocation invocation = new Invocation(aClass.getName(), method.getName(),
-                        new Class[]{String.class}, params);
-
-                // 远程调用
-                HttpClient httpClient = new HttpClient();
-
-                // 服务提供者的地址？注册中心 zk redis
-                // 先查找本地缓存，如果本地缓存没有去注册中心拉取
-                List<URL> urls = LOCAL_SP_CACHE.get(aClass.getName());
-                if (urls == null) {
-                    urls = RemoteMapRegister.getUrls(aClass.getName());
-                    LOCAL_SP_CACHE.put(aClass.getName(), urls);
+                // mock 数据
+                String mock = System.getProperty("mock");
+                if (mock != null && mock.startsWith("return:")) {
+                    String result = mock.replace("return:", "");
+                    return result;
                 }
 
+                // 封装 invocation
+                Invocation invocation = new Invocation(interfaceClass.getName(), method.getName(),
+                        new Class[]{String.class}, params);
 
-                // 负载均衡 + 重试机制
-                URL url = LoadBalance.random(urls);
-                String result = httpClient.send(url.getHostName(), url.getPort(), invocation);
+                Invoker invoker = ClusterInvoker.join(interfaceClass);
+                String invokeResult = invoker.invoke(invocation);
 
-
-                return JSON.parseObject(result, method.getReturnType());
+                return JSON.parseObject(invokeResult, method.getReturnType());
             }
         });
 
