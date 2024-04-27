@@ -2,8 +2,10 @@ package com.liziyuan.rpc.provider;
 
 
 import com.liziyuan.rpc.provider.api.impl.OrderServiceV1;
+import com.liziyuan.rpc.provider.framework.URL;
 import com.liziyuan.rpc.provider.framework.protocol.http.HttpServer;
 import com.liziyuan.rpc.provider.framework.register.LocalRegister;
+import com.liziyuan.rpc.provider.framework.register.RemoteMapRegister;
 
 /**
  * @author zqz
@@ -18,6 +20,11 @@ public class ProviderApp {
 
         // 本地注册
         LocalRegister.register(OrderService.class.getName(), OrderServiceV1.class);
+
+        // 注册中心注册
+        URL url = new URL("localhost", 8090);
+        RemoteMapRegister.regist(OrderService.class.getName(), url);
+
 
         HttpServer httpServer = new HttpServer();
         httpServer.start("localhost", 8090);

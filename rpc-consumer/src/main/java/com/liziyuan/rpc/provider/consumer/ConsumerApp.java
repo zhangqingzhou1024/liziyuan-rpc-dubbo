@@ -17,18 +17,18 @@ public class ConsumerApp {
 
         // 封装invocation参数
 
-        Invocation invocation = new Invocation(OrderService.class.getName(), "getOrder",
+      /*  Invocation invocation = new Invocation(OrderService.class.getName(), "getOrder",
                 new Class[]{String.class}, new Object[]{"zqz222"});
 
         HttpClient httpClient = new HttpClient();
         String result = httpClient.send("localhost", 8090, invocation);
+        System.out.println(result);*/
 
         // 易用性如何提升? 接口，代理对象， jdk动态代理
         // 更自动的话考虑和spring集成
         OrderService orderService = ProxyFactory.getProxy(OrderService.class);
         OrderInfo orderInfo = orderService.getOrder("zqz");
 
-        System.out.println(result);
         System.out.println(orderInfo);
 
     }
